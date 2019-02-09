@@ -5,10 +5,21 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Sluggable;
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                        'source' => 'name',
+                        'onUpdate' => true
+                      ]
+        ];
+    }
 
     /**
      * The attributes that are mass assignable.

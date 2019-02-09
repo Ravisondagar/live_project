@@ -12,9 +12,9 @@ class Department extends Model
     {
         return [
 	        'slug' => [
-	        'source' => 'name',
-	        'onUpdate' => true
-        ]
+            	        'source' => 'name',
+            	        'onUpdate' => true
+                      ]
         ];
     }
 

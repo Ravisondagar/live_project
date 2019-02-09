@@ -84,9 +84,11 @@ class UserEducationsController extends Controller
      * @param  \App\UserEducation  $userEducation
      * @return \Illuminate\Http\Response
      */
-    public function show(UserEducation $userEducation)
+    public function show(UserEducation $userEducation,$slug)
     {
-        //
+        $user_education = UserEducation::where('slug','=',$slug)->first();
+        return view('Admin.user_educations.show',compact('user_education'));
+
     }
 
     /**
@@ -137,6 +139,7 @@ class UserEducationsController extends Controller
             $user_educations->passing_year = $request->get('passing_year');
             $user_educations->percentage = $request->get('percentage');
             $user_educations->achievements = $request->get('achievements');
+            $user_educations->image = $request->get('image');
             $user_educations->update();
             return redirect()->route('user-educations.index')->withSuccess('Insert record successfully.');
         }

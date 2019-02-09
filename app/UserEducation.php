@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Image;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class UserEducation extends Model
 {
+    use Sluggable;
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -41,4 +43,14 @@ class UserEducation extends Model
         else
             return asset('image/default.jpg');
     } 
+
+
+	public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'degree'
+            ]
+        ];
+    }
 }

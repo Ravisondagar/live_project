@@ -34,5 +34,86 @@
 				});
 			});
 		</script>
+		<script src="{!! asset('theme/src/plugins/cropperjs/dist/cropper.js') !!}"></script>
+		<script>
+			window.addEventListener('DOMContentLoaded', function () {
+				var image = document.getElementById('image');
+				var cropBoxData;
+				var canvasData;
+				var cropper;
+
+				$('#modal').on('shown.bs.modal', function () {
+					cropper = new Cropper(image, {
+						autoCropArea: 0.5,
+						dragMode: 'move',
+						aspectRatio: 3 / 3,
+						restore: false,
+						guides: false,
+						center: false,
+						highlight: false,
+						cropBoxMovable: false,
+						cropBoxResizable: false,
+						toggleDragModeOnDblclick: false,
+						ready: function () {
+							cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+						}
+					});
+				}).on('hidden.bs.modal', function () {
+					cropBoxData = cropper.getCropBoxData();
+					canvasData = cropper.getCanvasData();
+					cropper.destroy();
+				});
+			});
+		</script>
+		<script>
+		$('document').ready(function(){
+			$('.data-table').DataTable({
+				scrollCollapse: true,
+				autoWidth: false,
+				responsive: true,
+				columnDefs: [{
+					targets: "datatable-nosort",
+					orderable: false,
+				}],
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"language": {
+					"info": "_START_-_END_ of _TOTAL_ entries",
+					searchPlaceholder: "Search"
+				},
+			});
+			$('.data-table-export').DataTable({
+				scrollCollapse: true,
+				autoWidth: false,
+				responsive: true,
+				columnDefs: [{
+					targets: "datatable-nosort",
+					orderable: false,
+				}],
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"language": {
+					"info": "_START_-_END_ of _TOTAL_ entries",
+					searchPlaceholder: "Search"
+				},
+				dom: 'Bfrtip',
+				buttons: [
+				'copy', 'csv', 'pdf', 'print'
+				]
+			});
+			var table = $('.select-row').DataTable();
+			$('.select-row tbody').on('click', 'tr', function () {
+				if ($(this).hasClass('selected')) {
+					$(this).removeClass('selected');
+				}
+				else {
+					table.$('tr.selected').removeClass('selected');
+					$(this).addClass('selected');
+				}
+			});
+			var multipletable = $('.multiple-select-row').DataTable();
+			$('.multiple-select-row tbody').on('click', 'tr', function () {
+				$(this).toggleClass('selected');
+			});
+		});
+	</script>
 </body>
 </html>

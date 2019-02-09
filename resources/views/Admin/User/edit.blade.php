@@ -17,27 +17,13 @@
 								</ol>
 							</nav>
 						</div>
-						{{-- <div class="col-md-6 col-sm-12 text-right">
-							<div class="dropdown">
-								<a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									January 2018
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">Export List</a>
-									<a class="dropdown-item" href="#">Policies</a>
-									<a class="dropdown-item" href="#">View Assets</a>
-								</div>
-							</div>
-						</div> --}}
 					</div>
 				</div>
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 					<div class="clearfix">
 						<div class="pull-left">
 							<h4 class="text-blue">Edit User</h4>
-							
 						</div>
-						
 					</div>
 					{!! Former::horizontal_open()->action( URL::route("user.update",$user->id))->method('patch')->id('form') !!}
 						<div class="form-group">
@@ -60,38 +46,33 @@
 							<input class="form-control" type="text" name="last_name" placeholder="Enter last Name...." value="{!! $user->last_name !!}">
 							@if($errors->has('last_name'))<p class="help-block">{!! $errors->first('last_name') !!}</p>@endif
 						</div>
-						{{-- <div class="form-group">
-							<label>Email</label>
-							<input class="form-control"  type="email" name="email" value="{!! $user->email !!}">
-							@if($errors->has('email'))<p class="help-block">{!! $errors->first('email') !!}</p>@endif
-						</div> --}}
 						<div class="col-md-6 col-sm-12">
-									<label class="weight-600">Role</label>
-									<div class="custom-control custom-radio mb-5">
-										<input type="radio" id="customRadio1" name="role" class="custom-control-input" value="employee" checked="">
-										<label class="custom-control-label" for="customRadio1">Employee</label>
-									</div>
-									<div class="custom-control custom-radio mb-5">
-										<input type="radio" id="customRadio2" name="role" class="custom-control-input" value="interviewer">
-										<label class="custom-control-label" for="customRadio2">Interviewer</label>
-									</div>
-									@if($errors->has('role'))<p class="help-block">{!! $errors->first('role') !!}</p>@endif
+							<label class="weight-600">Role</label>
+							<div class="custom-control custom-radio mb-5">
+								<input type="radio" id="customRadio1" name="role" class="custom-control-input" value="employee" checked="">
+								<label class="custom-control-label" for="customRadio1">Employee</label>
+							</div>
+							<div class="custom-control custom-radio mb-5">
+								<input type="radio" id="customRadio2" name="role" class="custom-control-input" value="interviewer">
+								<label class="custom-control-label" for="customRadio2">Interviewer</label>
+							</div>
+							@if($errors->has('role'))<p class="help-block">{!! $errors->first('role') !!}</p>@endif
 						</div>
 						<div class="col-md-6 col-sm-12">
-									<label class="weight-600">Gender</label>
-									<div class="custom-control custom-radio mb-5">
-										<input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="male" @if($user->gender == 'male') checked="" @endif >
-										<label class="custom-control-label" for="customRadio1">Male</label>
-									</div>
-									<div class="custom-control custom-radio mb-5">
-										<input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="female" @if($user->gender == 'female') checked="" @endif>
-										<label class="custom-control-label" for="customRadio2">Female</label>
-									</div>
-									<div class="custom-control custom-radio mb-5">
-										<input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="other" @if($user->gender == 'other') checked="" @endif>
-										<label class="custom-control-label" for="customRadio3">Other</label>
-									</div>
-									@if($errors->has('gender'))<p class="help-block">{!! $errors->first('gender') !!}</p>@endif
+							<label class="weight-600">Gender</label>
+							<div class="custom-control custom-radio mb-5">
+								<input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="male" @if($user->gender == 'male') checked="" @endif >
+								<label class="custom-control-label" for="customRadio1">Male</label>
+							</div>
+							<div class="custom-control custom-radio mb-5">
+								<input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="female" @if($user->gender == 'female') checked="" @endif>
+								<label class="custom-control-label" for="customRadio2">Female</label>
+							</div>
+							<div class="custom-control custom-radio mb-5">
+								<input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="other" @if($user->gender == 'other') checked="" @endif>
+								<label class="custom-control-label" for="customRadio3">Other</label>
+							</div>
+							@if($errors->has('gender'))<p class="help-block">{!! $errors->first('gender') !!}</p>@endif
 						</div>
 						<div class="form-group">
 							<label>Date Of Birth</label>

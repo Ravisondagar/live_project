@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Validator;
-use Former;
 use App\Department;
 use App\Mail\Passwordmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Validator;
+use Former;
 use Session;
 
 class UserController extends Controller
@@ -194,5 +196,96 @@ class UserController extends Controller
     {
         Auth::logout(); 
         return redirect('/login');
+    }
+
+    public function profile()
+    {
+        $id=Auth::user()->id;
+        $user = user::find($id);
+        return view('Admin.User.profile',compact('user'));
+    }
+
+    public function change_password_form()
+    {
+        return view('Admin.User.change_password_form');
+        
+    }
+
+    public function changepassword(Request $request)
+    {
+        
+            $rules=[
+                'old_password' => 'required',
+                'password' => 'required|confirmed',
+                'password_confirmation' => 'required',
+            ];
+            $validator = Validator::make($request->all(),$rules);
+            if ($validator->fails()) { 
+                Former::withErrors($validator);
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            try 
+            {
+                if (Hash::check($request->old_password, Auth::user()->password) )
+                {
+                    $user = Auth::user()->id;
+                    $user = user::find($user);
+                    $user->password=Hash::make($request->password);
+                    $user->update();
+                    
+                    return redirect()->back()->withSuccess('Password Update successfully.');
+
+                }
+                else
+                {
+                    return redirect()->back()->with('error','Old Password Not Match');
+                }
+
+                   
+            } 
+            catch (Exception $e) {
+               
+            }   
+    }
+    public function post_profile(Request $request) 
+    {
+        //$user = user::find($id);
+
+        $rules=[
+            'name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
+            'address' => 'required',
+        ];
+        $messages=[
+        'name.required' => 'The name field is required',
+        ];
+        $validator = Validator::make($request->all(),$rules,$messages);
+        if ($validator->fails()) { 
+            Former::withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        try
+        {
+            $user = Auth::user()->id;
+            $user = user::find($user);
+            $user->name=$request->get('name');
+            $user->last_name=$request->get('last_name');
+            $user->gender=$request->get('gender');
+            $user->dob=$request->get('dob');
+            $user->address=$request->get('address');
+            $user->update();
+            return redirect()->back()->with('success','Profile Update successfully.');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','Something went wrong, Please try after sometime.');
+        }
+
+    }
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 }

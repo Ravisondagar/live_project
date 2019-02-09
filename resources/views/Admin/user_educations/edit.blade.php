@@ -70,6 +70,17 @@
 							<input class="form-control" placeholder="Achievements"  type="text" name="achievements" value="{!! $user_educations->achievements !!}">
 							@if($errors->has('achievements'))<p class="help-block">{!! $errors->first('achievements') !!}</p>@endif
 						</div>
+						<div class="form-group">
+							<div id="container">
+							<label>Image</label>
+							<div id="previewDiv">
+								<img id="img" src="{!! asset('/image/default.jpg') !!}">
+							</div>
+							<a href="javascript:;" class="btn btn-primary" id="uploader">Upload Document</a>
+							@if($errors->has('image'))<p class="help-block">{!! $errors->first('image') !!}</p>@endif
+							</div>
+							<input type="hidden" name="image" id="image">
+						</div>
 						<div>
 							<button  type="submit" class="btn btn-primary"> Update </button>
 						</div>
@@ -78,4 +89,83 @@
 			</div>
 		</div>
 </div>
+<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+ 
+<br />
+<pre id="console"></pre>
+@endsection
+@section('script')
+<script type="text/javascript">
+// Custom example logic
+ 
+var uploader = new plupload.Uploader({
+    runtimes : 'html5,flash,silverlight,html4',
+     
+    browse_button : 'uploader', // you can pass in id...
+    container: document.getElementById('container'), // ... or DOM Element itself
+     
+    url : "{{ asset('plupload/upload.php') }}",
+
+    filters : {
+        max_file_size : '10mb',
+        mime_types: [
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "Zip files", extensions : "zip"}
+        ]
+    },
+ 
+    // Flash settings
+    flash_swf_url : "{{ asset('plupload/Moxie.swf') }}",
+ 
+    // Silverlight settings
+    silverlight_xap_url : "{{ asset('plupload/Moxie.xap') }}",
+     
+ 
+    init: {
+        PostInit: function() {
+            document.getElementById('filelist').innerHTML = '';
+        },
+ 
+        FilesAdded: function(up, files) {
+            
+            uploader.start();
+        },
+ 
+        // UploadProgress: function(up, file) {
+        //     document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+        // },
+        UploadFile: function(up, file){
+                    var tmp_url = '{!! asset('/tmp/') !!}';
+                    console.log(file);
+                    
+                        $('#image').val(file.name);
+                        
+
+                        /*$('#preview').val(file.name);
+                        $('#previewDiv >img').remove();
+                        $('#previewDiv').append("<img src='"+tmp_url +"/"+ file.name+"' id='preview' height='100px' width='100px'/>");*/
+                    
+                },
+        UploadComplete: function(up, files){
+        	
+                var tmp_url = '{!! asset('/tmp/') !!}';
+                console.log(files);
+                plupload.each(files, function(file) {
+                    $('#image').val(file.name);
+                    $('#previewDiv > img').remove();
+                    $('#previewDiv').append("<img src='"+"/tmp/"+ file.name+"' id='preview' height='100px' width='100px'/>");
+                });
+                jQuery('.loader').fadeToggle('medium');
+        },
+ 
+        Error: function(up, err) {
+            document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+        }
+    }
+});
+ 
+uploader.init();
+ 
+</script>
+
 @endsection

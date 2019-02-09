@@ -1,11 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<div class="login-wrap customscroll d-flex align-items-center flex-wrap justify-content-center pd-20">
+        <div class="login-box bg-white box-shadow pd-30 border-radius-5">
+            <img src="{!! asset('theme/vendors/images/login-img.png')!!}" alt="login" class="login-img">
+            <h2 class="text-center mb-30">Forgot Password</h2>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -17,31 +15,34 @@
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
+                       <p>Enter your email address to reset your password</p>
+                            <div class="input-group custom input-group-lg">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                <div class="input-group-append custom">
+                                    <span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <button type="submit" class="btn btn-primary">
+                                                {{ __('Send Password Reset Link') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                    <div class="col-sm-8">
+                                        <div class="forgot-password"><a href="{!! route('login') !!}" class="btn btn-outline-primary btn-lg btn-block">Sign In</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                     </form>
                 </div>
-            </div>
-        </div>
     </div>
-</div>
 @endsection

@@ -18,6 +18,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta charset="utf-8">
+
+    <!-- Site favicon -->
+    <!-- <link rel="shortcut icon" href="images/favicon.ico"> -->
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{!! asset('/theme/vendors/styles/style.css') !!}">
 </head>
 <body>
     <div id="app">
@@ -75,6 +88,14 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-119386393-1');
+        </script>
     </div>
 </body>
 </html>

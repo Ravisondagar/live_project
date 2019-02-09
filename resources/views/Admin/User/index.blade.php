@@ -16,30 +16,18 @@
 								</ol>
 							</nav>
 						</div>
-						{{-- <div class="col-md-6 col-sm-12 text-right">
-							<div class="dropdown">
-								<a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									January 2018
-								</a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">Export List</a>
-									<a class="dropdown-item" href="#">Policies</a>
-									<a class="dropdown-item" href="#">View Assets</a>
-								</div>
-							</div>
-						</div> --}}
 					</div>
 				</div>
-@if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-@endif
-@if ($message = Session::get('error'))
-        <div class="alert alert-warning">
-            <p>{{ $message }}</p>
-        </div>
-@endif
+				@if ($message = Session::get('success'))
+				        <div class="alert alert-success">
+				            <p>{{ $message }}</p>
+				        </div>
+				@endif
+				@if ($message = Session::get('error'))
+				        <div class="alert alert-warning">
+				            <p>{{ $message }}</p>
+				        </div>
+				@endif
 				<!-- Simple Datatable start -->
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 					<div class="clearfix mb-20">
@@ -92,8 +80,8 @@
 							</tbody>
 						</table>
 						@else
-			<p>No User Found.</p>
-			@endif
+						<p>No User Found.</p>
+						@endif
 					</div>
 				</div>
 @endsection
@@ -103,8 +91,6 @@
 	$(document).ready(function(){
 		$(document).on('click','.submit',function(e){
 		var r=$(this).data('id');
-		//alert(r);
-
 			e.preventDefault(this);
 			swal({
 					  title: "Are you sure?",
@@ -114,90 +100,13 @@
 					  dangerMode: true,
 					})
 					.then((willDelete) => {
-					  if (willDelete) {
-					    /*swal("Poof! Your imaginary file has been deleted!", {
-					      icon: "success",
-					    });*/
-					    //alert($('.form'.r))	
+					  if (willDelete) {	
 					    $('.form'+r).submit();
 					  } else {
 					    //swal("Your imaginary file is safe!");
 					    return false;
 					  }
 				});
-			/*var r = confirm('Are you sure to delete this record?'); 
-			if(r == true)
-			{
-				$('#form').submit();
-			}
-			else
-			{
-				return false;
-			}*/
-
 		});
 	});
-</script>
-<script src="{!! asset('/theme/src/plugins/datatables/media/js/jquery.dataTables.min.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/dataTables.bootstrap4.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/dataTables.responsive.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/responsive.bootstrap4.js') !!}"></script>
-	<!-- buttons for Export datatable -->
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/dataTables.buttons.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/buttons.bootstrap4.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/buttons.print.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/buttons.html5.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/buttons.flash.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/pdfmake.min.js') !!}"></script>
-	<script src="{!! asset('/theme/src/plugins/datatables/media/js/button/vfs_fonts.js') !!}"></script>
-	<script>
-		$('document').ready(function(){
-			$('.data-table').DataTable({
-				scrollCollapse: true,
-				autoWidth: false,
-				responsive: true,
-				columnDefs: [{
-					targets: "datatable-nosort",
-					orderable: false,
-				}],
-				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"language": {
-					"info": "_START_-_END_ of _TOTAL_ entries",
-					searchPlaceholder: "Search"
-				},
-			});
-			$('.data-table-export').DataTable({
-				scrollCollapse: true,
-				autoWidth: false,
-				responsive: true,
-				columnDefs: [{
-					targets: "datatable-nosort",
-					orderable: false,
-				}],
-				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"language": {
-					"info": "_START_-_END_ of _TOTAL_ entries",
-					searchPlaceholder: "Search"
-				},
-				dom: 'Bfrtip',
-				buttons: [
-				'copy', 'csv', 'pdf', 'print'
-				]
-			});
-			var table = $('.select-row').DataTable();
-			$('.select-row tbody').on('click', 'tr', function () {
-				if ($(this).hasClass('selected')) {
-					$(this).removeClass('selected');
-				}
-				else {
-					table.$('tr.selected').removeClass('selected');
-					$(this).addClass('selected');
-				}
-			});
-			var multipletable = $('.multiple-select-row').DataTable();
-			$('.multiple-select-row tbody').on('click', 'tr', function () {
-				$(this).toggleClass('selected');
-			});
-		});
-	</script>
 @endsection
